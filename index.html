@@ -9787,6 +9787,10 @@
     .orch.gz {
       pointer-events: none;
     }
+    .orch.gz .gz-dock,
+    .orch.gz .gz-copy {
+      display: contents;
+    }
     .orch.gz .engine-lab#labRunBtn {
       pointer-events: auto;
       left: 50%;
@@ -10355,85 +10359,304 @@
 
     @media (max-width: 720px) {
       .shell.gate-paint #ship { display: none !important; }
+      .shell:has(.orch.gz) {
+        --gz-dock-h: 112px;
+      }
+      .shell:has(.orch.gz[data-pick="gizmosql"]) {
+        --gz-dock-h: 268px;
+      }
+      .shell:has(.orch.gz[data-pick="quack"]) {
+        --gz-dock-h: 168px;
+      }
+      .shell:has(.orch.gz) .pad {
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%);
+        width: min(340px, calc(100vw - 16px));
+        bottom: calc(var(--gz-dock-h) + max(10px, env(safe-area-inset-bottom)));
+        max-height: min(28vh, 220px);
+      }
       .orch.gz .kepler { display: none; }
       .sky:has(.orch.gz) .out-universe {
-        top: 11%;
-        transform: translate(-50%, -50%) scale(0.48);
+        top: 7%;
+        transform: translate(-50%, -50%) scale(0.34);
+        opacity: 0.22;
       }
-      .orch.gz .engine-laws {
-        top: auto;
-        bottom: calc(max(12px, env(safe-area-inset-bottom)) + 72px);
-        right: 10px;
+      .orch.gz .gz-copy {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+        position: absolute;
+        left: max(52px, calc(env(safe-area-inset-left) + 44px));
+        right: max(12px, env(safe-area-inset-right));
+        top: calc(8px + env(safe-area-inset-top));
+        transform: none;
+        width: auto;
+        margin: 0;
+        z-index: 15;
+        pointer-events: none;
+        text-align: center;
+      }
+      .orch.gz .gz-copy .orch-law,
+      .orch.gz .gz-copy .orch-say {
+        position: static;
         left: auto;
-        max-width: min(168px, 42vw);
-      }
-      .orch.gz .engine-laws .lab-pick {
-        padding: 6px 8px;
-      }
-      .orch.gz .engine-laws .lab-pick b { font-size: 11px; }
-      .orch.gz:not([data-pick="gizmosql"]) .gz-moon { display: none; }
-      .orch.gz[data-pick="alone"] .orch-shell .pname { display: none; }
-      .orch.gz[data-pick="quack"] .orch-shell.outer .pname { display: none; }
-      .orch.gz .gz-quack-n,
-      .orch.gz .gz-gizmo-n {
         top: auto;
-        bottom: calc(max(12px, env(safe-area-inset-bottom)) + 168px);
-        left: 10px;
+        transform: none;
+        width: auto;
+        max-width: 100%;
       }
       .orch.gz .orch-law {
-        top: 1.2%;
-        width: min(22rem, 92vw);
         font-size: 13px;
+        line-height: 1.3;
       }
       .orch.gz .orch-say {
-        top: 5%;
-        width: min(22rem, 92vw);
         font-size: 12px;
+        line-height: 1.35;
       }
+      .orch.gz .gz-dock {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+        position: absolute;
+        left: max(12px, env(safe-area-inset-left));
+        right: max(12px, env(safe-area-inset-right));
+        bottom: max(10px, env(safe-area-inset-bottom));
+        z-index: 16;
+        pointer-events: none;
+      }
+      .orch.gz .gz-dock::before {
+        content: "";
+        position: absolute;
+        left: -12px;
+        right: -12px;
+        bottom: -12px;
+        height: calc(100% + 36px);
+        background: linear-gradient(180deg, transparent 0%, rgba(5, 4, 8, 0.42) 28%, rgba(5, 4, 8, 0.88) 100%);
+        pointer-events: none;
+        z-index: -1;
+      }
+      .orch.gz .gz-dock > * {
+        pointer-events: auto;
+      }
+      .orch.gz .gz-dock .engine-laws {
+        position: relative;
+        top: auto;
+        right: auto;
+        left: auto;
+        bottom: auto;
+        max-width: none;
+        width: 100%;
+        gap: 6px;
+      }
+      .orch.gz .gz-dock .lab-ways {
+        text-align: center;
+        max-width: none;
+        width: 100%;
+      }
+      .orch.gz .gz-dock .lab-choice {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+        justify-content: stretch;
+        width: 100%;
+        min-width: 0;
+      }
+      .orch.gz .gz-dock .lab-pick {
+        max-width: none;
+        min-width: 0;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 8px 8px;
+        border-radius: 10px;
+      }
+      .orch.gz .gz-dock .lab-pick[data-gz-station="gizmosql"] {
+        grid-column: 1 / -1;
+      }
+      .orch.gz .gz-dock .lab-pick b {
+        font-size: 12px;
+        line-height: 1.2;
+        margin: 0;
+      }
+      .orch.gz .gz-dock .gz-quack-n,
+      .orch.gz .gz-dock .gz-gizmo-n {
+        position: relative;
+        top: auto;
+        left: auto;
+        bottom: auto;
+        align-items: center;
+        width: 100%;
+      }
+      .orch.gz .gz-dock .gz-quack-row {
+        justify-content: center;
+      }
+      .orch.gz .gz-dock .gz-quack-row button {
+        width: 44px;
+        height: 44px;
+        border-radius: 10px;
+      }
+      .orch.gz .gz-dock .gz-cap-help {
+        max-width: 42ch;
+        text-align: center;
+      }
+      .orch.gz .gz-dock .engine-lab#labRunBtn,
+      .orch.gz .engine-lab#labRunBtn {
+        position: relative;
+        left: auto;
+        top: auto;
+        bottom: auto;
+        transform: none;
+        width: 100%;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 10px 12px;
+        border-radius: 12px;
+      }
+      .orch.gz:not([data-pick="gizmosql"]) .gz-dock .engine-lab#labRunBtn,
+      .orch.gz:not([data-pick="gizmosql"]) .engine-lab#labRunBtn,
+      .orch.gz .engine-lab#labRunBtn[hidden] {
+        display: none;
+      }
+      .orch.gz .gz-dock .engine-lab .pname {
+        font-size: 15px;
+      }
+      .orch.gz:not([data-pick="gizmosql"]) .gz-moon { display: none; }
+      .orch.gz .orch-shell .pname { display: none; }
       .orch.gz .orch-star {
         left: 50%;
-        top: 42%;
-        width: min(72vw, 280px);
-        height: min(72vw, 280px);
+        top: 40%;
+        width: min(52vw, 208px);
+        height: min(52vw, 208px);
       }
       .orch.gz .orch-shell { width: auto; height: auto; }
       .orch.gz .orch-shell.outer { width: 100%; height: 100%; }
       .orch.gz .orch-shell.inner { width: 62%; height: 62%; }
-      .orch.gz .orch-core { width: 28%; height: 28%; }
-      .orch.gz .orch-shell .pname { font-size: 12px; }
-      .orch.gz .gz-ram-read { bottom: -74px; font-size: 11px; }
-      .orch.gz .gz-ram-tag { font-size: 10px; padding: 2px 6px; }
-      .orch.gz .gz-moon.analyst { left: 22%; top: 68%; }
-      .orch.gz .gz-moon.dashboard { left: 78%; top: 68%; }
-      .orch.gz .gz-moon.transform { left: 22%; top: 82%; }
-      .orch.gz .gz-moon.agent { left: 78%; top: 82%; }
       .orch.gz .orch-core { width: 44%; height: 44%; }
+      .orch.gz .orch-star > .pname { bottom: -24px; font-size: 12px; }
+      .orch.gz .orch-star > small { bottom: -38px; font-size: 10px; }
+      .orch.gz .gz-ram-read {
+        bottom: -58px;
+        font-size: 11px;
+        width: min(28ch, 72vw);
+      }
+      .orch.gz .gz-ram-tag { font-size: 10px; padding: 2px 6px; }
+      .orch.gz .gz-moon {
+        width: 76px;
+        padding: 6px 2px;
+        z-index: 9;
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
+      }
+      .orch.gz .gz-moon .globe {
+        width: 28px;
+        height: 28px;
+      }
+      .orch.gz .gz-moon .pname { font-size: 12px; }
+      .orch.gz .gz-moon small {
+        font-size: 9px;
+        letter-spacing: 0;
+        text-transform: none;
+      }
+      .orch.gz .gz-moon.analyst { left: 13%; top: 30%; }
+      .orch.gz .gz-moon.dashboard { left: 87%; top: 30%; }
+      .orch.gz .gz-moon.transform { left: 16%; top: 58%; }
+      .orch.gz .gz-moon.agent { left: 84%; top: 58%; }
+      .orch.gz .gz-duck {
+        width: 104px;
+      }
+      .orch.gz .gz-mini-star {
+        width: 28px;
+        height: 28px;
+      }
+      .orch.gz .gz-duck.second { left: 16%; top: 26%; }
+      .orch.gz .gz-duck.client.c1 { left: 16%; top: 22%; }
+      .orch.gz .gz-duck.client.c2 { left: 16%; top: 40%; }
+      .orch.gz .gz-duck.client.c3 { left: 16%; top: 58%; }
+    }
+    @media (max-width: 720px) and (hover: none) {
+      .orch.gz .gz-moon:hover .globe,
+      .orch.gz .moon:hover .globe {
+        transform: none;
+      }
     }
     @media (max-width: 720px) and (max-height: 700px) {
       .orch.gz .orch-star {
-        width: min(56vw, 200px);
-        height: min(56vw, 200px);
+        top: 38%;
+        width: min(46vw, 176px);
+        height: min(46vw, 176px);
       }
-      .orch.gz .gz-moon.analyst { left: 14%; top: 78%; }
-      .orch.gz .gz-moon.dashboard { left: 38%; top: 78%; }
-      .orch.gz .gz-moon.transform { left: 62%; top: 78%; }
-      .orch.gz .gz-moon.agent { left: 86%; top: 78%; }
+      .orch.gz .gz-moon small { display: none; }
+      .orch.gz .gz-moon.analyst { left: 12%; top: 28%; }
+      .orch.gz .gz-moon.dashboard { left: 88%; top: 28%; }
+      .orch.gz .gz-moon.transform { left: 14%; top: 56%; }
+      .orch.gz .gz-moon.agent { left: 86%; top: 56%; }
+      .orch.gz .gz-ram-read { bottom: -52px; }
     }
     @media (max-width: 720px) and (max-height: 500px) {
-      .orch.gz .orch-star {
-        left: 32%;
-        top: 52%;
-        width: min(56vw, 200px);
-        height: min(56vw, 200px);
+      .shell:has(.orch.gz),
+      .shell:has(.orch.gz[data-pick="gizmosql"]),
+      .shell:has(.orch.gz[data-pick="quack"]) {
+        --gz-dock-h: 120px;
       }
-      .orch.gz .gz-moon.analyst { left: 78%; top: 28%; }
-      .orch.gz .gz-moon.dashboard { left: 78%; top: 46%; }
-      .orch.gz .gz-moon.transform { left: 78%; top: 64%; }
-      .orch.gz .gz-moon.agent { left: 78%; top: 82%; }
-      .orch.gz .orch-core { width: 40%; height: 40%; }
+      .orch.gz .gz-copy {
+        left: max(12px, env(safe-area-inset-left));
+        transform: none;
+        width: min(42ch, 56vw);
+        align-items: flex-start;
+        text-align: left;
+      }
+      .orch.gz .gz-dock {
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: flex-end;
+        gap: 6px;
+      }
+      .orch.gz .gz-dock .lab-choice {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+      .orch.gz .gz-dock .lab-pick[data-gz-station="gizmosql"] {
+        grid-column: auto;
+      }
+      .orch.gz .gz-dock .engine-laws {
+        flex: 1 1 100%;
+      }
+      .orch.gz .gz-dock .gz-quack-n,
+      .orch.gz .gz-dock .gz-gizmo-n {
+        width: auto;
+        flex: 0 0 auto;
+      }
+      .orch.gz .gz-dock .engine-lab#labRunBtn,
+      .orch.gz .engine-lab#labRunBtn {
+        width: auto;
+        flex: 1 1 auto;
+        min-width: 160px;
+      }
+      .orch.gz .orch-star {
+        left: 34%;
+        top: 40%;
+        width: min(34vw, 140px);
+        height: min(34vw, 140px);
+      }
+      .orch.gz .gz-moon.analyst { left: 68%; top: 22%; }
+      .orch.gz .gz-moon.dashboard { left: 88%; top: 22%; }
+      .orch.gz .gz-moon.transform { left: 68%; top: 46%; }
+      .orch.gz .gz-moon.agent { left: 88%; top: 46%; }
+      .orch.gz .orch-core { width: 42%; height: 42%; }
+      .orch.gz .gz-duck.second { left: 14%; top: 42%; }
+      .orch.gz .gz-duck.client.c1 { left: 14%; top: 24%; }
+      .orch.gz .gz-duck.client.c2 { left: 14%; top: 48%; }
+      .orch.gz .gz-duck.client.c3 { left: 14%; top: 72%; }
       .sky:has(.orch.gz) .out-universe {
         top: 10%;
-        left: 50%;
+        left: 72%;
       }
     }
   </style>
@@ -13620,7 +13843,7 @@
       return `<span class="ring-rig"><span class="ring back">${planetRingSvg()}</span><span class="globe"></span><span class="ring front">${planetRingSvg()}</span></span>`;
     }
     let orchRaf = 0;
-    const orchSim = { phase: "idle", hold: 0, beatDur: 1, t0: 0, proxyOn: true, corpProxy: true, law: "now", forking: false, forkGen: 0, lawTo: "", csReview: false, csApplied: false, csRejected: false, pick: "gizmosql", filled: false, queryBand: "", inspect: "gizmosql", inspectLast: "gizmosql", specLine: "revenue", specMode: "column", specRan: false, specRunning: false, specMs: "", specTimer: 0, quackN: 1, gizmoN: 1, flightBeat: "", flightRunning: false, flightTimer: 0, flightGen: 0, sessOn: false, flightWho: "", connWho: [], sessWho: [], moonWalk: {}, refuseWho: "", capShown: false, capN: 0, capHelp: false, moonSess: {} };
+    const orchSim = { phase: "idle", hold: 0, beatDur: 1, t0: 0, proxyOn: true, corpProxy: true, law: "now", forking: false, forkGen: 0, lawTo: "", csReview: false, csApplied: false, csRejected: false, pick: "gizmosql", filled: false, queryBand: "", inspect: window.matchMedia("(max-width: 720px)").matches ? "" : "gizmosql", inspectLast: "gizmosql", specLine: "revenue", specMode: "column", specRan: false, specRunning: false, specMs: "", specTimer: 0, quackN: 1, gizmoN: 1, flightBeat: "", flightRunning: false, flightTimer: 0, flightGen: 0, sessOn: false, flightWho: "", connWho: [], sessWho: [], moonWalk: {}, refuseWho: "", capShown: false, capN: 0, capHelp: false, moonSess: {} };
     const GZ_MOON_PADS = {
       analyst: {
         who: "Analyst",
@@ -14680,22 +14903,11 @@
       const quackOn = pick === "quack";
       const gizmoOn = pick === "gizmosql";
       return `<div class="orch idle gz" id="orchStage" data-pick="${pick}" data-quack-n="${gzQuackN()}" data-gizmo-n="${gzGizmoN()}" data-flight="${orchSim.flightBeat || ""}" data-sess="${orchSim.sessOn ? "1" : "0"}" data-ram="${(orchSim.sessWho || []).length}" data-cap-help="${orchSim.capHelp ? "1" : "0"}">
-        <p class="orch-law" id="orchLaw">${escapeHtml(gzLaw())}</p>
-        <p class="orch-say" id="orchSay">${gzSay()}</p>
-        <div class="engine-laws">
-          <p class="lab-ways">Who opened the file</p>
-          <div class="lab-choice">
-            <button class="lab-pick${orchSim.pick === "alone" ? " on" : ""}" type="button" data-gz-station="alone" aria-pressed="${orchSim.pick === "alone" ? "true" : "false"}">
-              <b>DuckDB alone</b>
-            </button>
-            <button class="lab-pick${orchSim.pick === "quack" ? " on" : ""}" type="button" data-gz-station="quack" aria-pressed="${orchSim.pick === "quack" ? "true" : "false"}">
-              <b>Quack</b>
-            </button>
-            <button class="lab-pick${gizmoOn ? " on" : ""}" type="button" data-gz-station="gizmosql" aria-pressed="${gizmoOn ? "true" : "false"}">
-              <b>gizmosql_server</b>
-            </button>
-          </div>
+        <div class="gz-copy">
+          <p class="orch-law" id="orchLaw">${escapeHtml(gzLaw())}</p>
+          <p class="orch-say" id="orchSay">${gzSay()}</p>
         </div>
+        <div class="gz-dock">
         <div class="gz-quack-n" id="gzQuackN">
           <p class="lab-ways">quack: connections</p>
           <div class="gz-quack-row">
@@ -14716,6 +14928,21 @@
         <button class="engine-lab on" type="button" id="labRunBtn">
           <span class="pname">Run the simulation</span>
         </button>
+        <div class="engine-laws">
+          <p class="lab-ways">Who opened the file</p>
+          <div class="lab-choice">
+            <button class="lab-pick${orchSim.pick === "alone" ? " on" : ""}" type="button" data-gz-station="alone" aria-pressed="${orchSim.pick === "alone" ? "true" : "false"}">
+              <b>DuckDB alone</b>
+            </button>
+            <button class="lab-pick${orchSim.pick === "quack" ? " on" : ""}" type="button" data-gz-station="quack" aria-pressed="${orchSim.pick === "quack" ? "true" : "false"}">
+              <b>Quack</b>
+            </button>
+            <button class="lab-pick${gizmoOn ? " on" : ""}" type="button" data-gz-station="gizmosql" aria-pressed="${gizmoOn ? "true" : "false"}">
+              <b>gizmosql_server</b>
+            </button>
+          </div>
+        </div>
+        </div>
         <svg class="gz-paths" id="gzPaths" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"></svg>
         <svg class="kepler" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
           ${gritOrbit(34, 26, "moons")}
