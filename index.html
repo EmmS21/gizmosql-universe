@@ -10369,12 +10369,74 @@
         --gz-dock-h: 168px;
       }
       .shell:has(.orch.gz) .pad {
-        left: 50%;
-        right: auto;
-        transform: translateX(-50%);
-        width: min(340px, calc(100vw - 16px));
+        pointer-events: auto;
+        left: max(10px, env(safe-area-inset-left));
+        right: max(10px, env(safe-area-inset-right));
+        transform: none;
+        top: calc(48px + env(safe-area-inset-top));
+        width: auto;
         bottom: calc(var(--gz-dock-h) + max(10px, env(safe-area-inset-bottom)));
-        max-height: min(28vh, 220px);
+        max-height: none;
+        overflow-x: hidden;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior: contain;
+        touch-action: pan-y;
+        z-index: 18;
+      }
+      .shell:has(.orch.gz) .pad > *,
+      .shell:has(.orch.gz) .pad-head,
+      .shell:has(.orch.gz) .gone,
+      .shell:has(.orch.gz) .brief,
+      .shell:has(.orch.gz) .spec,
+      .shell:has(.orch.gz) .analyst-pad,
+      .shell:has(.orch.gz) .server-pad {
+        pointer-events: auto;
+      }
+      .shell:has(.orch.gz) .gone,
+      .shell:has(.orch.gz) .brief {
+        overflow: visible;
+        flex: none;
+        max-height: none;
+      }
+      .shell:has(.orch.gz) .pad-head {
+        position: sticky;
+        top: 0;
+        z-index: 2;
+        background: #050408;
+        padding-bottom: 6px;
+      }
+      .shell:has(.orch.gz) .pad-btn {
+        min-height: 44px;
+        padding: 10px 14px;
+      }
+      .shell:has(.orch.gz) .spec-file {
+        width: min(148px, 42vw);
+        height: min(148px, 42vw);
+      }
+      .shell:has(.orch.gz) .spec-modes {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+      .shell:has(.orch.gz) .spec-modes button,
+      .shell:has(.orch.gz) .spec-run,
+      .shell:has(.orch.gz) .analyst-row button {
+        min-height: 44px;
+        padding: 10px 12px;
+        font-size: 13px;
+      }
+      .shell:has(.orch.gz) .spec-run {
+        position: sticky;
+        bottom: 0;
+        z-index: 2;
+        background: #050408;
+        margin-bottom: 0;
+      }
+      .shell:has(.orch.gz) .analyst-row input {
+        min-height: 44px;
+        min-width: 3.6em;
+        font-size: 16px;
       }
       .orch.gz .kepler { display: none; }
       .sky:has(.orch.gz) .out-universe {
